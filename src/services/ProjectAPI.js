@@ -1,4 +1,4 @@
-const DEFAULT_TIMEOUT = 1 * 1000; 
+const DEFAULT_TIMEOUT = 5 * 1000; 
 
 export class ProjectAPI {
   static API_URL = "http://localhost:3000/api";

@@ -1,14 +1,12 @@
-import { useEffect, useState } from "react";
-import { Outlet, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useProject } from "../../../services/Projects";
+import LoadingIndicator from "../../../components/Shared/LoadingIndicator";
 
 const ProjectDetail = () => {
   const { projectid } = useParams();
-  
   const { project, error, loading } = useProject({ projectid });
-  
 
-  if (loading) return <p>Loading project...</p>;
+  if (loading) return <LoadingIndicator />;
   if (error) return <p>Error: {error}</p>;
 
   return (

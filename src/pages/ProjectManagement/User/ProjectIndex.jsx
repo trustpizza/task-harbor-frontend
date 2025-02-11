@@ -1,10 +1,11 @@
 import { Link, Outlet } from "react-router-dom";
 import { useProjects} from "../../../services/Projects";
+import LoadingIndicator from "../../../components/Shared/LoadingIndicator";
 
 const ProjectIndex = () => {
-  const { projects, error, loading } = useProjects(); // ✅ Call hook properly
+  const { projects, error, loading } = useProjects();
 
-  if (loading) return <p>Loading projects...</p>;
+  if (loading) return <LoadingIndicator />;
   if (error) return <p>Error: {error}</p>;
 
   return (
