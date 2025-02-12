@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useProject } from "../../../services/Projects";
 import LoadingIndicator from "../../../components/Shared/LoadingIndicator";
 import PageLayout from "../../../Layouts/ProjectPageLayout";
+import Board from "../../../components/kanban/Board";
 import { useState } from "react";
 
 const ProjectDetail = () => {
@@ -15,7 +16,7 @@ const ProjectDetail = () => {
   return (
     <>
     <PageLayout title={project.name}>
-
+      <Board />
     </PageLayout>
     </>
   );

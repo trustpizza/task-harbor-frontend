@@ -16,11 +16,17 @@
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@syncfusion/ej2-react-kanban": "^28.2.3",
     "@tailwindcss/vite": "^4.0.6",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.4.2",
+    "lucide-react": "^0.475.0",
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-focus-lock": "^2.13.6",
     "react-router-dom": "^7.1.5",
+    "tailwind-merge": "^3.0.1",
     "tailwindcss": "^4.0.6"
   },
   "devDependencies": {
