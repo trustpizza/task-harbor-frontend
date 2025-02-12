@@ -1,15 +1,15 @@
 // PageLayout.jsx
-import Header from "../components/Shared/Header";
-import Footer from '../components/Shared/Footer';
+import ProjectHeader from "../components/ProjectManagement/ProjectHeader";
+// import Footer from '../components/Shared/Footer';
 
-const PageLayout = ({ title, children, socialLinks }) => {
+const PageLayout = ({ title, children, headerLinks = [] }) => {
   return (
     <div className="flex flex-col min-h-screen drawer">
-      <Header title={title} />
+      <ProjectHeader title={title} links={headerLinks} />
       <main className="container mx-auto p-4 flex flex-grow">
         {children}
       </main>
-      <Footer socialLinks={socialLinks} />
+      {/* <Footer socialLinks={socialLinks} /> */}
     </div>
   );
 };

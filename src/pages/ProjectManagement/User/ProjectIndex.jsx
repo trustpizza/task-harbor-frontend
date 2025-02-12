@@ -2,7 +2,6 @@ import { Link, Outlet } from "react-router-dom";
 import { useProjects} from "../../../services/Projects";
 import LoadingIndicator from "../../../components/Shared/LoadingIndicator";
 import PageLayout from "../../../Layouts/ProjectPageLayout";
-import KanbanBaord from "../../../components/ProjectManagement/Kanban/KanbanBoard";
 
 const ProjectIndex = () => {
   const { projects, error, loading } = useProjects();
@@ -16,11 +15,11 @@ const ProjectIndex = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <PageLayout title="Projects" socialLinks={socialLinks}> {/* Wrap with PageLayout */}
+    <PageLayout title="Projects" > {/* Wrap with PageLayout */}
       {projects.length === 0 ? (
         <p>No projects available</p>
       ) : (
-          <KanbanBaord projects={projects} />
+        <div></div>
       )}
       <Outlet /> {/* Keep Outlet for nested routes */}
     </PageLayout>

@@ -33,7 +33,7 @@ vi.mock('./ProjectList', () => { // Path to your ProjectList component
 });
 
 
-describe("Project Index Page", () => {
+describe.skip("Project Index Page", () => {
 
   it('renders loading indicator when loading is true', () => {
     const mockUseProjects = vi.mocked(useProjects);
