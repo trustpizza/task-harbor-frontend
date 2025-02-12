@@ -1,26 +1,28 @@
 const ProjectCard = ({ project }) => {
   if (!project) {
-    return null; // Or a placeholder if you prefer
+    return null;
   }
 
   return (
-    <>
-    <div className="card bg-base-100 shadow-xl">
+    <div className="card bg-base-100 shadow-xl m-2"> {/* Added margin */}
       <div className="card-body">
         <h2 className="card-title">{project.name}</h2>
-        <p>{project.description}</p>
-        <div className="mt-4">
-          <p className="font-semibold">Status:</p>
-          <p>{project.status || "No Status"}</p>
-        </div>
-        <div className="mt-4">
-          <p className="font-semibold">Due Date:</p>
-          <p>{project.dueDate || "Not Set"}</p>
+        <p className="text-sm text-gray-500">{project.description}</p> {/* Added styling */}
+        <div className="mt-4 border-t pt-2"> {/* Added separator */}
+          <div className="flex justify-between"> {/* Flexbox for layout */}
+            <div>
+              <p className="font-semibold text-sm">Status:</p>
+              <p className="text-sm">{project.status || "No Status"}</p>
+            </div>
+            <div>
+              <p className="font-semibold text-sm">Due Date:</p>
+              <p className="text-sm">{project.dueDate || "Not Set"}</p>
+            </div>
+          </div>
         </div>
         {/* Add more project details as needed */}
       </div>
     </div>
-    </>
   );
 };
 
