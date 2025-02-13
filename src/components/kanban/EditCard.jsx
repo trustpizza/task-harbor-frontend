@@ -43,7 +43,7 @@ const CardBody = ({ card, onTitleChange, onCardMove, onDelete }) => {
         <textarea
           onBlur={(e) => onTitleChange(e.target.value)}
           id="card-title"
-          className="w-full h-20 min-h-20 transition p-2.5 outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 bg-transparent sm:text-sm text-zinc-900 dark:text-zinc-100 resize-none border border-zinc-200 dark:border-zinc-700 rounded-md"
+          className="w-full h-20 min-h-20 transition p-2.5 outline-none focus:ring-2 focus:ring-inset focus:ring-primary bg-transparent sm:text-sm text-base-content dark:text-neutral-content resize-none border border-base-300 dark:border-neutral-700 rounded-md"
         >
           {card.title}
         </textarea>
@@ -57,7 +57,7 @@ const CardBody = ({ card, onTitleChange, onCardMove, onDelete }) => {
           onChange={onCardMove}
         />
       </div>
-      <span className="border-b py-1 border-dashed border-zinc-200 dark:border-zinc-700/50" />
+      <span className="border-b py-1 border-dashed border-base-300 dark:border-neutral-700/50" />
       <Button onClick={onDelete} variant="destructive" className="w-full mt-1">
         Delete card
       </Button>
@@ -67,8 +67,8 @@ const CardBody = ({ card, onTitleChange, onCardMove, onDelete }) => {
 
 const CardHeader = ({ setIsEditing }) => {
   return (
-    <div className="w-full px-4 pr-2 py-2 border-b border-zinc-100 dark:border-zinc-800 flex justify-between items-center">
-      <h3 className="text-zinc-900 dark:text-zinc-200 text-sm">Edit a card</h3>
+    <div className="w-full px-4 pr-2 py-2 border-b border-base-200 dark:border-neutral-800 flex justify-between items-center">
+      <h3 className="text-base-content dark:text-neutral-200 text-sm">Edit a card</h3>
       <IconButton onClick={() => setIsEditing(false)} title="Close">
         <X size={18} strokeWidth={1.75} />
       </IconButton>

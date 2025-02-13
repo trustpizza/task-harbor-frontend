@@ -8,7 +8,7 @@ const ProjectHeader = ({ title, links = [] }) => {
 
   return (
     <>
-    <div className="navbar bg-base-100 p-6">
+    <div className="navbar bg-base-100 shadow-md p-6">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">

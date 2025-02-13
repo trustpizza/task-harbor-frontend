@@ -8,15 +8,10 @@ import DropIndicator from "./DropIndicator";
 import Button from "../common/Button";
 import { motion } from "framer-motion";
 import PropTypes from 'prop-types';
+import bgColors from "../helpers/colors";
+import NewCardForm from "./newCardForm";
 
-const bgColors = {
-  gray: "bg-zinc-500 dark:bg-zinc-600",
-  pink: "bg-purple-500",
-  green: "bg-teal-500",
-  blue: "bg-blue-500",
-};
-
-const Column = ({ title, bgColor, column, cards, setCards }) => {
+const Column = ({ title, bgColor, columnTitle, columnId, cards, setCards }) => {
   const [isAddingCard, setIsAddingCard] = useState(false);
 
   const handleSubmission = (e) => {
@@ -27,7 +22,7 @@ const Column = ({ title, bgColor, column, cards, setCards }) => {
     const newCard = {
       id: Date.now().toString(),
       title,
-      column,
+      columnTitle,
     };
 
     setCards([...cards, newCard]);
@@ -42,9 +37,9 @@ const Column = ({ title, bgColor, column, cards, setCards }) => {
 
   const handleDragEnd = (e) => {
     const draggedCardId = e.dataTransfer.getData("cardId");
-    clearIndicators(column);
+    clearIndicators(columnTitle);
 
-    const dropIndicators = getDropIndicators(column);
+    const dropIndicators = getDropIndicators(columnTitle);
     const element = getNearestDropIndicator(e, dropIndicators);
 
     const beforeCardId = element.dataset.before;
@@ -55,7 +50,7 @@ const Column = ({ title, bgColor, column, cards, setCards }) => {
     const newCards = cardsCopy.filter((card) => card.id !== draggedCardId);
     const draggedCard = cardsCopy.find((card) => card.id === draggedCardId);
     if (draggedCard) {
-      draggedCard.column = column;
+      draggedCard.columnTitle = columnTitle;
     }
 
     const pushToEnd = beforeCardId === "-1";
@@ -72,64 +67,75 @@ const Column = ({ title, bgColor, column, cards, setCards }) => {
 
   const handleDragOver = (e) => {
     e.preventDefault();
-    clearIndicators(column);
-    highlightDropIndicators(e, column);
+    clearIndicators(columnTitle);
+    highlightDropIndicators(e, columnTitle);
   };
 
   const handleDragLeave = () => {
-    clearIndicators(column);
+    clearIndicators(columnTitle);
   };
 
-  const bgColorClass = bgColors[bgColor];
-  const filteredCards = cards.filter((card) => card.column === column);
+  const bgColorClass = bgColor ? bgColors[bgColor] : bgColors["base"];
+  const filteredCards = cards.filter((card) => card.field_definition_id === columnId);
 
   return (
-    <div className="rounded-xl overflow-hidden flex flex-col w-full h-min max-h-full max-w-[21.5rem] shrink-0">
-      <div className={`${bgColorClass} w-full flex items-baseline justify-between px-4 py-[1.10rem]`}>
-        <h2 className="text-white text-xs uppercase tracking-wide font-medium">{title}</h2>
-        <span className="text-white font-medium text-xs">({filteredCards.length})</span>
+    <div className="rounded-xl overflow-hidden flex flex-col w-full h-min max-h-full max-w-[21.5rem] shrink-0 bg-base-100 shadow-md">
+      <div className={`bg-${bgColorClass} w-full flex items-baseline justify-between px-4 py-[1.10rem] text-white`}>
+          <h2 className="text-xs uppercase tracking-wide font-medium">{title}</h2>
+          <span className="font-medium text-xs">({filteredCards.length})</span>
       </div>
-      <motion.div layout className="bg-zinc-100 dark:bg-zinc-900">
-        <motion.div
-          layout
-          onDrop={handleDragEnd}
-          onDragLeave={handleDragLeave}
-          onDragOver={handleDragOver}
-          className="p-3 overflow-y-auto h-full overflow-x-hidden"
-        >
-          {filteredCards.map((card) => (
-            <Card key={card.id} {...card} handleDragStart={handleDragStart} cards={cards} setCards={setCards} />
-          ))}
-          <DropIndicator beforeId={-1} column={column} />
-          <motion.div layout className="py-1">
-            {isAddingCard ? (
-              <form onSubmit={handleSubmission}>
-                <input
-                  name="card-title"
-                  placeholder="Enter a card title"
-                  type="text"
-                  onBlur={() => setIsAddingCard(false)}
-                  autoFocus={true}
-                  spellCheck={false}
-                  className="w-full py-2.5 px-3 ring-1 ring-inset sm:text-sm transition outline-none rounded-md focus:ring-2 focus:ring-indigo-500"
-                />
-              </form>
-            ) : (
-              <Button onClick={() => setIsAddingCard(true)} variant="secondaryV2" className="w-full">
-                Add a card
-              </Button>
-            )}
+      <motion.div layout className="flex-grow">
+          <motion.div
+              layout
+              onDrop={handleDragEnd}
+              onDragLeave={handleDragLeave}
+              onDragOver={handleDragOver}
+              className="p-3 overflow-y-auto h-full overflow-x-hidden"
+          >
+              {filteredCards.map((card) => (
+                  <Card
+                      key={card.id}
+                      id={card.id}
+                      title={card.value}
+                      columnId={card.field_definition_id}
+                      handleDragStart={handleDragStart}
+                      cards={cards}
+                      setCards={setCards}
+                  />
+              ))}
+              <DropIndicator beforeId={-1} columnTitle={columnTitle} />
+              <motion.div layout className="py-1">
+                  {isAddingCard? (
+                      <form onSubmit={handleSubmission}>
+                          <input
+                              name="card-title"
+                              placeholder="Enter a card title"
+                              type="text"
+                              value={newCardTitle}
+                              onChange={(e) => setNewCardTitle(e.target.value)}
+                              onBlur={() => setIsAddingCard(false)}
+                              autoFocus={true}
+                              spellCheck={false}
+                              className="w-full py-2.5 px-3 ring-1 ring-inset sm:text-sm transition outline-none rounded-md focus:ring-primary bg-base-200 text-base-content border border-base-300"
+                          />
+                      </form>
+                  ): (
+                      <Button onClick={() => setIsAddingCard(true)} variant="secondaryV2" className="w-full">
+                          Add a card
+                      </Button>
+                  )}
+              </motion.div>
           </motion.div>
-        </motion.div>
       </motion.div>
-    </div>
+  </div>
   );
+
 };
 
 Column.propTypes = {
   title: PropTypes.string.isRequired,
   bgColor: PropTypes.oneOf(["gray", "pink", "green", "blue"]).isRequired,
-  column: PropTypes.string.isRequired,
+  columnTitle: PropTypes.string.isRequired,
   cards: PropTypes.array.isRequired, // Consider adding more specific shape validation
   setCards: PropTypes.func.isRequired,
 };

@@ -16,7 +16,7 @@ const ProjectDetail = () => {
   return (
     <>
     <PageLayout title={project.name}>
-      <Board />
+      <Board columns={project.field_definitions} values={project.field_values}/>
     </PageLayout>
     </>
   );
