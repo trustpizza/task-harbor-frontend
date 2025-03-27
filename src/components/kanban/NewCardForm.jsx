@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Button from "./Button";
 import PropTypes from 'prop-types';
 
 const NewCardForm = ({ newCardTitle, onChange, onSubmit, onBlur, autoFocus = true, spellCheck = false }) => {

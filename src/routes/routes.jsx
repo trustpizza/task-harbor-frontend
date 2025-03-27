@@ -1,26 +1,41 @@
+// routes.jsx
 import Error404 from "../pages/General/Errors/404";
 import ProjectIndex from "../pages/ProjectManagement/User/ProjectIndex";
 import About from "../pages/General/About";
 import ProjectDetail from "../pages/ProjectManagement/User/ProjectDetail";
+import Login from "../pages/Auth/Login";
+import ProtectedRoute from "./ProtectedRoute";
 
 const routes = [
   {
     path: "/",
     element: <About />,
-    errorElement: <Error404 /> // This will show when an error occurs on this route
+    errorElement: <Error404 />,
   },
   {
     path: "/projects",
-    element: <ProjectIndex />, 
+    element: (
+      <ProtectedRoute>
+        <ProjectIndex />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/projects/:projectid",
-    element: <ProjectDetail />
+    element: (
+      <ProtectedRoute>
+        <ProjectDetail />
+      </ProtectedRoute>
+    ),
   },
+    {
+        path: "/login",
+        element: <Login />
+    },
   {
-    path: "*", // Catch-all route for unmatched paths
-    element: <Error404 />
-  }
+    path: "*",
+    element: <Error404 />,
+  },
 ];
 
 export default routes;
