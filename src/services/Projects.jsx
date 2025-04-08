@@ -16,20 +16,24 @@ export const useProjects = () => {
   return { projects, error, loading };
 };
 
+
 export const useProject = ({ projectid }) => {
   const [project, setProject] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!projectid) return;  // Guard against empty projectId
-    
+    if (!projectid) {
+      setError("Project ID is missing");
+      setLoading(false);
+      return;
+    }
+
     ProjectAPI.fetchProject(projectid)
       .then(setProject)
-      .catch((err) => setError(err))  // Ensure setError is called with the error object
+      .catch((err) => setError(err.message || "Failed to fetch project"))
       .finally(() => setLoading(false));
-
-  }, [projectid]); // Include projectId as a dependency
+  }, [projectid]);
 
   return { project, error, loading };
 };
