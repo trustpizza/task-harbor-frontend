@@ -17,6 +17,7 @@ export class AuthAPI {
 
   static async fetchUser() {
     const token = this.getToken();
+    console.log(token)
     if (!token) return null;
 
     try {

@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
-import { useProjects} from "../../../services/Projects";
-import LoadingIndicator from "../../../components/Shared/LoadingIndicator";
-import PageLayout from "../../../Layouts/ProjectPageLayout";
+import { useProjects} from "../../../../services/Projects";
+import LoadingIndicator from "../../../../components/Shared/LoadingIndicator";
+import PageLayout from "../../../../Layouts/ProjectPageLayout";
 
 const ProjectIndex = () => {
   const { projects, error, loading } = useProjects();
@@ -10,16 +10,22 @@ const ProjectIndex = () => {
     { name: 'linkedin', icon: 'linkedin', href: 'https://www.linkedin.com/in/yourprofile' },
     { name: 'github', icon: 'github', href: 'https://github.com/yourusername' },
   ];
-
+  console.log(projects, error, loading)
   if (loading) return <LoadingIndicator />;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <PageLayout title="Projects" > {/* Wrap with PageLayout */}
-      {projects.length === 0 ? (
+      {projects.data.length === 0 ? (
         <p>No projects available</p>
-      ) : (
-        <div></div>
+      ): (
+        <ul>
+          {projects.data.map((project) => (
+            <li key={project.id}>
+              <Link to={`/projects/${project.id}`}>{project.attributes.name}</Link>
+            </li>
+          ))}
+        </ul>
       )}
       <Outlet /> {/* Keep Outlet for nested routes */}
     </PageLayout>

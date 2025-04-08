@@ -23,7 +23,7 @@ export const useProject = ({ projectid }) => {
 
   useEffect(() => {
     if (!projectid) return;  // Guard against empty projectId
-        
+    
     ProjectAPI.fetchProject(projectid)
       .then(setProject)
       .catch((err) => setError(err))  // Ensure setError is called with the error object

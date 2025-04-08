@@ -1,9 +1,10 @@
 // routes.jsx
 import Error404 from "../pages/General/Errors/404";
-import ProjectIndex from "../pages/ProjectManagement/User/ProjectIndex";
+import ProjectIndex from "../pages/ProjectManagement/User/Projects/ProjectIndex";
 import About from "../pages/General/About";
-import ProjectDetail from "../pages/ProjectManagement/User/ProjectDetail";
+import ProjectDetail from "../pages/ProjectManagement/User/Projects/ProjectDetail";
 import Login from "../pages/Auth/Login";
+import TaskDetail from "../pages/ProjectManagement/User/Tasks/TaskDetail";
 import ProtectedRoute from "./ProtectedRoute";
 
 const routes = [
@@ -27,11 +28,21 @@ const routes = [
         <ProjectDetail />
       </ProtectedRoute>
     ),
+    children: [
+      {
+        path: "tasks/:taskId", // Nested route for TaskDetail
+        element: (
+          <ProtectedRoute>
+            <TaskDetail />
+          </ProtectedRoute>
+        ),
+      },
+    ],
   },
-    {
-        path: "/login",
-        element: <Login />
-    },
+  {
+    path: "/login",
+    element: <Login />,
+  },
   {
     path: "*",
     element: <Error404 />,
