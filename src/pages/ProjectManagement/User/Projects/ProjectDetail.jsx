@@ -3,7 +3,7 @@ import { useProject } from "../../../../services/Projects";
 import PageLayout from "../../../../Layouts/ProjectPageLayout";
 import LoadingIndicator from "../../../../components/Shared/LoadingIndicator";
 import ProjectFields from "../../../../components/ProjectManagement/ProjectFields";
-import TaskGrid from "../../../../components/TaskManagement/TaskGrid";
+// import TaskGrid from "../../../../components/ProjectManagement/TaskGrid";
 
 const ProjectDetail = () => {
   const { projectid } = useParams();

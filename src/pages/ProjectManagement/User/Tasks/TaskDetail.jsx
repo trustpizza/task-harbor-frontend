@@ -9,7 +9,7 @@ const TaskDetail = () => {
   const taskableId = projectid || workflowid;
   const taskableType = projectid ? "projects" : "workflows";
   const { task, error, loading } = useTask({ taskableId, taskId, taskableType, include: "fields,field_definitions" });
-  console.log(task);
+
   if (loading) return <LoadingIndicator />;
   if (error) return <p>Error: {error.message || "An unexpected error occurred."}</p>;
 

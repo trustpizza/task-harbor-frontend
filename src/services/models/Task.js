@@ -3,7 +3,6 @@ import FieldDefinition from "./FieldDefinition";
 
 class Task {
   constructor(data, included = []) {
-    console.log(data, included)
     this.id = data.id;
     this.name = data.attributes?.name || "Untitled Task";
     this.description = data.attributes?.description || "No description available";

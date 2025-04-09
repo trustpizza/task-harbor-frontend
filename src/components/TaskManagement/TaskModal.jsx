@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const TaskModal = ({ taskableId, taskId, taskableType, onClose }) => {
   const { task, error, loading } = useTask({ taskableId, taskId, taskableType });
-  console.log(task, error, loading);
+
   if (loading) return <LoadingIndicator />;
   if (error) return <p>Error: {error}</p>;
 

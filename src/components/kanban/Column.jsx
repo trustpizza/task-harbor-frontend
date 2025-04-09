@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 import PropTypes from 'prop-types';
 import bgColors from "../helpers/colors";
 
-const Column = ({ title, bgColor, columnTitle, columnId, cards, setCards }) => {
+const Column = ({ bgColor, columnTitle, columnId, cards, setCards, onDeleteColumn }) => {
   const handleDragStart = (e, card) => {
     e.dataTransfer.setData("cardId", card.id);
   };
@@ -59,10 +59,15 @@ const Column = ({ title, bgColor, columnTitle, columnId, cards, setCards }) => {
   const filteredCards = cards.filter((card) => card.field_definition_id === columnId);
 
   return (
-    <div className="card bg-base-100 dark:bg-base-200 shadow-md">
-      <div className={`card-header bg-${bgColorClass} text-white`}>
-        <h2 className="text-xs uppercase tracking-wide font-medium">{title}</h2>
-        <span className="font-medium text-xs">({filteredCards.length})</span>
+    <div className="card bg-base-100 dark:bg-base-200 shadow-md relative">
+      <div className={`card-header bg-${bgColorClass} text-white flex justify-between items-center`}>
+        <h2 className="text-xs uppercase tracking-wide font-medium">{columnTitle || "Untitled Column"}</h2>
+        <button
+          className="w-6 h-6 flex items-center justify-center rounded-full bg-red-500 text-white text-xs"
+          onClick={() => onDeleteColumn(columnId)}
+        >
+          X
+        </button>
       </div>
       <div className="card-body p-3 overflow-y-auto">
         {filteredCards.map((card) => (
@@ -83,11 +88,12 @@ const Column = ({ title, bgColor, columnTitle, columnId, cards, setCards }) => {
 };
 
 Column.propTypes = {
-  title: PropTypes.string.isRequired,
   bgColor: PropTypes.oneOf(["gray", "pink", "green", "blue"]).isRequired,
   columnTitle: PropTypes.string.isRequired,
-  cards: PropTypes.array.isRequired, // Consider adding more specific shape validation
+  columnId: PropTypes.string.isRequired,
+  cards: PropTypes.array.isRequired,
   setCards: PropTypes.func.isRequired,
+  onDeleteColumn: PropTypes.func.isRequired,
 };
 
 export default Column;
