@@ -7,16 +7,16 @@ export const useTasks = ({ taskableId, taskableType, include = "" }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    TaskAPI.fetchTasks(taskableId, taskableType, include )
+    TaskAPI.fetchTasks(taskableId, taskableType, include)
       .then((fetchedTasks) => setTasks(fetchedTasks))
       .catch((err) => setError(err))
       .finally(() => setLoading(false));
-  }, [taskableId, taskableType, include]);
+  }, [taskableId, taskableType]);
 
   return { tasks, error, loading };
 };
 
-export const useTask = ({ taskableId, taskId, taskableType, include = "" }) => {
+export const useTask = ({ taskableId, taskId, taskableType }) => {
   const [task, setTask] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -24,11 +24,11 @@ export const useTask = ({ taskableId, taskId, taskableType, include = "" }) => {
   useEffect(() => {
     if (!taskableId || !taskId) return;
 
-    TaskAPI.fetchTask(taskableId, taskId, taskableType, include)
+    TaskAPI.fetchTask(taskableId, taskId, taskableType, "all")
       .then((fetchedTask) => setTask(fetchedTask))
       .catch((err) => setError(err))
       .finally(() => setLoading(false));
-  }, [taskableId, taskId, taskableType, include]);
+  }, [taskableId, taskId, taskableType]);
 
   return { task, error, loading };
 };

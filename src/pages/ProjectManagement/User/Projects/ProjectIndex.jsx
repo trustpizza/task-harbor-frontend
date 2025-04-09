@@ -4,21 +4,20 @@ import PageLayout from "../../../../Layouts/ProjectPageLayout";
 import Board from "../../../../components/kanban/Board";
 
 const ProjectIndex = () => {
-  const { projects, error, loading } = useProjects();
+  const { projects, error, loading } = useProjects({ include: "all" });
 
   if (loading) return <LoadingIndicator />;
   if (error) return <p>Error: {error}</p>;
 
-  // Placeholder logic for sorting projects into columns
   const columns = [
     { id: "overdue", name: "Overdue", bgColor: "red" },
     { id: "on-track", name: "On Track", bgColor: "green" },
     { id: "upcoming", name: "Upcoming", bgColor: "blue" },
   ];
 
-  const values = projects.data.map((project) => ({
+  const values = projects.map((project) => ({
     id: project.id,
-    value: project.attributes.name,
+    value: project.name,
     field_definition_id: "on-track", // Placeholder: Assign all to "On Track" for now
   }));
 

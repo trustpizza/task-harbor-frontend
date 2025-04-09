@@ -1,27 +1,16 @@
 import BaseAPI from "./BaseAPI";
+import Task from "./models/Task";
 
 export class TaskAPI extends BaseAPI {
-  static async fetchTasks(taskableId, taskableType, options = {}, timeout = this.DEFAULT_TIMEOUT) {
-    if (typeof taskableType === 'string' && !taskableType.endsWith("s")) {
-      taskableType += "s";
-    } else if (typeof taskableType !== 'string') {
-      console.error("TaskAPI.fetchTask received non-string taskableType:", taskableType);
-      return Promise.resolve(null);
-    }
-    
-    const query = options.include ? `?include=${options.include}` : ""; // Ensure query is declared before use
-    return this.sendRequest("GET", null, `/${taskableType}/${taskableId}/tasks${query}`, timeout);
+  static async fetchTasks(taskableId, taskableType, include = "", timeout = this.DEFAULT_TIMEOUT) {
+    const query = include ? `?include=${include}` : "";
+    const response = await this.sendRequest("GET", null, `/${taskableType}/${taskableId}/tasks${query}`, timeout);
+    return response.data.map((taskData) => new Task(taskData, response.included));
   }
 
-  static async fetchTask(taskableId, taskId, taskableType, options = {}, timeout = this.DEFAULT_TIMEOUT) {
-    if (typeof taskableType === 'string' && !taskableType.endsWith("s")) {
-      taskableType += "s";
-    } else if (typeof taskableType !== 'string') {
-      console.error("TaskAPI.fetchTask received non-string taskableType:", taskableType);
-      return Promise.resolve(null); // Example: return null
-    }
-
-    const query = options.include ? `?include=${options.include}` : ""; // Ensure query is declared before use
-    return this.sendRequest("GET", null, `/${taskableType}/${taskableId}/tasks/${taskId}${query}`, timeout);
+  static async fetchTask(taskableId, taskId, taskableType, include = "", timeout = this.DEFAULT_TIMEOUT) {
+    const query = include ? `?include=${include}` : "";
+    const response = await this.sendRequest("GET", null, `/${taskableType}/${taskableId}/tasks/${taskId}${query}`, timeout);
+    return new Task(response.data, response.included);
   }
 }

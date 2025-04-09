@@ -1,23 +1,22 @@
 import { useEffect, useState } from "react";
 import { ProjectAPI } from "./ProjectAPI";
 
-export const useProjects = () => {
+export const useProjects = ({ include = "" }) => {
   const [projects, setProjects] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    ProjectAPI.fetchProjects()
-      .then(setProjects)
+    ProjectAPI.fetchProjects(include)
+      .then((fetchedProjects) => setProjects(fetchedProjects))
       .catch((err) => setError(err))
       .finally(() => setLoading(false));
-  }, []);
+  }, [include]);
 
   return { projects, error, loading };
 };
 
-
-export const useProject = ({ projectid }) => {
+export const useProject = ({ projectid, include = "" }) => {
   const [project, setProject] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -29,11 +28,11 @@ export const useProject = ({ projectid }) => {
       return;
     }
 
-    ProjectAPI.fetchProject(projectid)
-      .then(setProject)
+    ProjectAPI.fetchProject(projectid, include)
+      .then((fetchedProject) => setProject(fetchedProject))
       .catch((err) => setError(err.message || "Failed to fetch project"))
       .finally(() => setLoading(false));
-  }, [projectid]);
+  }, [projectid, include]);
 
   return { project, error, loading };
 };

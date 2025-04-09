@@ -1,3 +1,5 @@
+import User from "./models/User";
+
 export class AuthAPI {
   static BASE_URL = "http://localhost:3000";
   static API_URL = `${this.BASE_URL}/api/v1`;
@@ -17,7 +19,6 @@ export class AuthAPI {
 
   static async fetchUser() {
     const token = this.getToken();
-    console.log(token)
     if (!token) return null;
 
     try {
@@ -34,7 +35,7 @@ export class AuthAPI {
       }
 
       const data = await response.json();
-      return data.user;
+      return new User(data.user);
     } catch (error) {
       console.error(error);
       return null;

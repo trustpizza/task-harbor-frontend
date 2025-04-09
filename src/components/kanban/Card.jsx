@@ -36,7 +36,6 @@ const Card = ({ id, title, columnId, handleDragStart, cards, setCards }) => {
             }}
             title="Edit card"
           >
-            <BadgePlus size={18} strokeWidth={1.75} className="text-neutral-500" />
           </IconButton>
         </motion.div>
       </div>

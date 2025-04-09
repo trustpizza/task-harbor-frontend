@@ -32,7 +32,7 @@ const ProjectFields = ({ title, fieldDefinitions, fields, canEdit, onSubmit }) =
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {fieldDefinitions.map((fieldDef) => {
             const relatedFields = fields.filter(
-              (field) => field.relationships.field_definition.data.id === fieldDef.id
+              (field) => field.fieldDefinitionId === fieldDef.id
             );
 
             return (

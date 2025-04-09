@@ -9,9 +9,9 @@ const TaskItem = ({ taskableId, taskableType, task, canEdit, onSubmit }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [editedTask, setEditedTask] = useState({
-    name: task.attributes.name,
-    description: task.attributes.description,
-    dueDate: new Date(task.attributes.due_date).toISOString().split("T")[0],
+    name: task.name,
+    description: task.description,
+    dueDate: new Date(task.dueDate).toISOString().split("T")[0],
   });
 
   const handleChange = (field, value) => {
@@ -35,7 +35,7 @@ const TaskItem = ({ taskableId, taskableType, task, canEdit, onSubmit }) => {
             className="input input-bordered w-full"
           />
         ) : (
-          <p className="text-sm text-secondary">{task.attributes.name}</p>
+          <p className="text-sm text-secondary">{task.name}</p>
         )}
       </div>
       <div className="mb-2">
@@ -47,7 +47,7 @@ const TaskItem = ({ taskableId, taskableType, task, canEdit, onSubmit }) => {
             className="textarea textarea-bordered w-full"
           />
         ) : (
-          <p className="text-sm text-secondary">{task.attributes.description}</p>
+          <p className="text-sm text-secondary">{task.description}</p>
         )}
       </div>
       <div>
@@ -61,7 +61,7 @@ const TaskItem = ({ taskableId, taskableType, task, canEdit, onSubmit }) => {
           />
         ) : (
           <p className="text-sm text-secondary">
-            {new Date(task.attributes.due_date).toLocaleDateString()}
+            {new Date(task.dueDate).toLocaleDateString()}
           </p>
         )}
       </div>
@@ -114,7 +114,7 @@ TaskItem.propTypes = {
     attributes: PropTypes.shape({
       name: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
-      due_date: PropTypes.string.isRequired,
+      dueDate: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
   canEdit: PropTypes.bool.isRequired,
