@@ -1,36 +1,35 @@
 import { useState, useEffect } from "react";
 import { TaskAPI } from "./TaskAPI";
 
-export const useTasks = ({ projectId }) => {
+export const useTasks = ({ taskableId, taskableType }) => {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    TaskAPI.fetchTasks(projectId, { include: "all" })
+    TaskAPI.fetchTasks(taskableId, taskableType, { include: "all" })
       .then(setTasks)
       .catch((err) => setError(err))
       .finally(() => setLoading(false));
-  }, [projectId]);
+  }, [taskableId, taskableType]);
 
   return { tasks, error, loading };
 };
 
-export const useTask = ({ projectId, taskId }) => {
+export const useTask = ({ taskableId, taskId, taskableType }) => {
+  console.log(taskableId, taskId, taskableType);
   const [task, setTask] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!projectId || !taskId) return; // Guard against missing projectId or taskId
-
-    TaskAPI.fetchTask(projectId, taskId, { include: "all" })
+    if (!taskableId || !taskId) return; // Guard against missing taskableId or taskId
+    
+    TaskAPI.fetchTask(taskableId, taskId, taskableType, { include: "all" })
       .then(setTask)
       .catch((err) => setError(err))
       .finally(() => setLoading(false));
-  }, [projectId, taskId]);
-
-  console.log(task);
-
+  }, [taskableId, taskId]);
+  console.log(task, error, loading);
   return { task, error, loading };
 };

@@ -5,10 +5,8 @@ import SearchIcon from '../Shared/SearchIcon';
 import NotificationIcon from '../Shared/NotificationIcon';
 
 const ProjectHeader = ({ title, links = [] }) => {
-
   return (
-    <>
-    <div className="navbar bg-base-100 shadow-md p-6">
+    <div className="navbar bg-base-100 dark:bg-base-200 shadow-md p-6">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -16,9 +14,9 @@ const ProjectHeader = ({ title, links = [] }) => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-              {links.map((link) => ( // Use .map here!
-                <li key={link.href}> {/* Add a key prop! Important for React lists */}
+            className="menu menu-sm dropdown-content bg-base-100 dark:bg-base-200 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+              {links.map((link) => (
+                <li key={link.href}>
                   <Link to={link.href}>{link.text}</Link>
                 </li>
               ))}
@@ -26,7 +24,7 @@ const ProjectHeader = ({ title, links = [] }) => {
         </div>
       </div>
       <div className="navbar-center">
-        <h1 className="btn btn-ghost text-xl underline">{title}</h1>
+        <h1 className="btn btn-ghost text-xl underline text-base-content dark:text-base-content">{title}</h1>
       </div>
       <div className="navbar-end">
         <button className="btn btn-ghost btn-circle">
@@ -37,10 +35,8 @@ const ProjectHeader = ({ title, links = [] }) => {
         </button>
       </div>
     </div>
-    </>
-  )
-
-}
+  );
+};
 
 ProjectHeader.propTypes = {
   title: PropTypes.string,

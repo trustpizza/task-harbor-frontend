@@ -3,7 +3,7 @@ import ProjectField from "./ProjectField";
 import { useState } from "react";
 import EditButton from "../buttons/EditButton";
 
-const ProjectFields = ({ fieldDefinitions, fields, canEdit, onSubmit }) => {
+const ProjectFields = ({ title, fieldDefinitions, fields, canEdit, onSubmit }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedFields, setEditedFields] = useState({});
 
@@ -20,7 +20,7 @@ const ProjectFields = ({ fieldDefinitions, fields, canEdit, onSubmit }) => {
   return (
     <div className="p-6 bg-base-100 shadow-md rounded-lg">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold text-primary">Project Fields</h2>
+        <h2 className="text-xl font-bold text-primary">{title}</h2>
         {canEdit && (
           <EditButton
             isEditing={isEditing}

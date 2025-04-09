@@ -48,19 +48,7 @@ const CardBody = ({ card, onTitleChange, onCardMove, onDelete }) => {
           {card.title}
         </textarea>
       </div>
-      <div>
-        <SelectInput
-          options={["scheduled", "todo", "doing", "done"]}
-          selected={card.column}
-          label="Move card to"
-          id="move-to"
-          onChange={onCardMove}
-        />
-      </div>
       <span className="border-b py-1 border-dashed border-base-300 dark:border-neutral-700/50" />
-      <Button onClick={onDelete} variant="destructive" className="w-full mt-1">
-        Delete card
-      </Button>
     </div>
   );
 };

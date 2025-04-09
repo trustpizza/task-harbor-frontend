@@ -1,63 +1,32 @@
-import { Link, Outlet } from "react-router-dom";
-import { useProjects} from "../../../../services/Projects";
+import { useProjects } from "../../../../services/Projects";
 import LoadingIndicator from "../../../../components/Shared/LoadingIndicator";
 import PageLayout from "../../../../Layouts/ProjectPageLayout";
+import Board from "../../../../components/kanban/Board";
 
 const ProjectIndex = () => {
   const { projects, error, loading } = useProjects();
 
-  const socialLinks = [ // Define your social links
-    { name: 'linkedin', icon: 'linkedin', href: 'https://www.linkedin.com/in/yourprofile' },
-    { name: 'github', icon: 'github', href: 'https://github.com/yourusername' },
-  ];
-  console.log(projects, error, loading)
   if (loading) return <LoadingIndicator />;
   if (error) return <p>Error: {error}</p>;
 
+  // Placeholder logic for sorting projects into columns
+  const columns = [
+    { id: "overdue", name: "Overdue", bgColor: "red" },
+    { id: "on-track", name: "On Track", bgColor: "green" },
+    { id: "upcoming", name: "Upcoming", bgColor: "blue" },
+  ];
+
+  const values = projects.data.map((project) => ({
+    id: project.id,
+    value: project.attributes.name,
+    field_definition_id: "on-track", // Placeholder: Assign all to "On Track" for now
+  }));
+
   return (
-    <PageLayout title="Projects" > {/* Wrap with PageLayout */}
-      {projects.data.length === 0 ? (
-        <p>No projects available</p>
-      ): (
-        <ul>
-          {projects.data.map((project) => (
-            <li key={project.id}>
-              <Link to={`/projects/${project.id}`}>{project.attributes.name}</Link>
-            </li>
-          ))}
-        </ul>
-      )}
-      <Outlet /> {/* Keep Outlet for nested routes */}
+    <PageLayout title="Projects">
+      <Board columns={columns} values={values} />
     </PageLayout>
   );
 };
 
 export default ProjectIndex;
-// const ProjectIndex = () => {
-//   const { projects, error, loading } = useProjects();
-
-//   if (loading) return <LoadingIndicator />;
-//   if (error) return <p>Error: {error}</p>;
-
-//   return (
-//     <>
-//     <div>
-//       <h1>Projects</h1>
-//       {projects.length === 0 ? (
-//         <p>No projects available</p>
-//       ) : (
-//         <ul>
-//           {projects.map((project) => (
-//             <li key={project.id}>
-//               <Link to={`/projects/${project.id}`}>{project.name}</Link>
-//             </li>
-//           ))}
-//         </ul>
-//       )}
-//     </div>
-//     <Outlet />
-//     </>
-//   );
-// };
-
-// export default ProjectIndex;

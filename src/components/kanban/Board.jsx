@@ -12,18 +12,20 @@ const Board = ({ columns, values }) => {
   };
 
   return (
-    <main className="w-full flex-1 sm:pb-4 overflow-hidden"> {/* Remove background color from main */}
-      <div className="w-full h-full py-6 sm:py-12 px-6 md:px-0 mx-auto flex justify-center gap-4 overflow-x-scroll">
+    <main className="w-full flex-1 sm:pb-4 overflow-hidden">
+      <div className="w-full h-full py-6 sm:py-12 px-6 md:px-0 mx-auto grid grid-cols-3 gap-4">
         {columns.map(column => (
-          <Column
-            key={column.id}
-            title={column.name}
-            bgColor={column.bgColor}
-            columnTitle={column.name}
-            columnId={column.id}
-            cards={values.filter(value => value.field_definition_id === column.id)}
-            setCards={handleCardUpdate}
-          />
+          <div key={column.id} className="flex flex-col">
+            <h2 className="text-lg font-bold text-center mb-4">{column.name}</h2>
+            <Column
+              title={column.name}
+              bgColor={column.bgColor}
+              columnTitle={column.name}
+              columnId={column.id}
+              cards={values.filter(value => value.field_definition_id === column.id)}
+              setCards={handleCardUpdate}
+            />
+          </div>
         ))}
       </div>
     </main>

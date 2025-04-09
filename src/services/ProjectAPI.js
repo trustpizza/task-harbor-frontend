@@ -8,8 +8,8 @@ export class ProjectAPI extends BaseAPI {
   }
 
   // Fetch a specific project by ID
-  static async fetchProject(projectId, timeout = this.DEFAULT_TIMEOUT) {
-    const response = await this.sendRequest('GET', null, `/projects/${projectId}?include=all`, timeout);
+  static async fetchProject(projectid, timeout = this.DEFAULT_TIMEOUT) {
+    const response = await this.sendRequest('GET', null, `/projects/${projectid}?include=all`, timeout);
     if (!response) return [];
     return response
   }

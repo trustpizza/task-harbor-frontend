@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TaskModal from "./TaskModal";
 
-const TaskItem = ({ projectId, task, canEdit, onSubmit }) => {
+const TaskItem = ({ taskableId, taskableType, task, canEdit, onSubmit }) => {
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -26,7 +26,7 @@ const TaskItem = ({ projectId, task, canEdit, onSubmit }) => {
   return (
     <div className="p-4 bg-base-200 rounded-lg shadow-sm">
       <div className="mb-2">
-        <h3 className="text-sm font-semibold text-gray-700">Name</h3>
+        <h3 className="text-sm font-semibold text-primary">Name</h3>
         {isEditing ? (
           <input
             type="text"
@@ -35,11 +35,11 @@ const TaskItem = ({ projectId, task, canEdit, onSubmit }) => {
             className="input input-bordered w-full"
           />
         ) : (
-          <p className="text-sm text-gray-600">{task.attributes.name}</p>
+          <p className="text-sm text-secondary">{task.attributes.name}</p>
         )}
       </div>
       <div className="mb-2">
-        <h3 className="text-sm font-semibold text-gray-700">Description</h3>
+        <h3 className="text-sm font-semibold text-primary">Description</h3>
         {isEditing ? (
           <textarea
             value={editedTask.description}
@@ -47,11 +47,11 @@ const TaskItem = ({ projectId, task, canEdit, onSubmit }) => {
             className="textarea textarea-bordered w-full"
           />
         ) : (
-          <p className="text-sm text-gray-600">{task.attributes.description}</p>
+          <p className="text-sm text-secondary">{task.attributes.description}</p>
         )}
       </div>
       <div>
-        <h3 className="text-sm font-semibold text-gray-700">Due Date</h3>
+        <h3 className="text-sm font-semibold text-primary">Due Date</h3>
         {isEditing ? (
           <input
             type="date"
@@ -60,7 +60,7 @@ const TaskItem = ({ projectId, task, canEdit, onSubmit }) => {
             className="input input-bordered w-full"
           />
         ) : (
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-secondary">
             {new Date(task.attributes.due_date).toLocaleDateString()}
           </p>
         )}
@@ -91,12 +91,13 @@ const TaskItem = ({ projectId, task, canEdit, onSubmit }) => {
       </div>
       {isModalOpen && (
         <TaskModal
-          projectId={projectId}
+          taskableId={taskableId}
+          taskableType={taskableType}
           taskId={task.id}
           onClose={() => setIsModalOpen(false)}
         >
           <button
-            onClick={() => navigate(`tasks/${task.id}`)} // Navigate to TaskDetail view
+            onClick={() => navigate(`tasks/${task.id}`)}
             className="btn btn-link"
           >
             Go to Task Detail

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import TaskItem from "./TaskItem";
 
-const TaskGrid = ({ projectId, tasks, canEdit, onSubmit }) => {
+const TaskGrid = ({ taskableId, tasks, canEdit, onSubmit }) => {
 
   const handleTaskSubmit = (taskId, updatedTask) => {
     onSubmit({ [taskId]: updatedTask });
@@ -14,7 +14,8 @@ const TaskGrid = ({ projectId, tasks, canEdit, onSubmit }) => {
         {tasks.map((task) => (
           <TaskItem
             key={task.id}
-            projectId={projectId} // Pass projectId to TaskItem
+            taskableId={taskableId}
+            taskableType={`${task.relationships.taskable.data.type}s`}
             task={task}
             canEdit={canEdit}
             onSubmit={(updatedTask) => handleTaskSubmit(task.id, updatedTask)}

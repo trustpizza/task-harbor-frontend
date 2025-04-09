@@ -11,10 +11,6 @@ const ProjectDetail = () => {
   const location = useLocation();
   const { project, error, loading } = useProject({ projectid });
 
-  if (!projectid) {
-    return <p>Error: Project ID is missing.</p>;
-  }
-
   if (loading) return <LoadingIndicator />;
   if (error) return <p>Error: {error}</p>;
 
@@ -43,44 +39,46 @@ const ProjectDetail = () => {
     // Add API logic here to update the tasks
   };
 
+  // Check if the current route is a child route (e.g., /projects/:projectid/tasks/:taskId)
   const isChildRoute = location.pathname.includes(`/projects/${projectid}/tasks/`);
 
   return (
-    <PageLayout title={project_attrs.name || "Untitled Project"}>
-      {isChildRoute ? (
-        <Outlet />
-      ) : (
+    isChildRoute ? (
+      <Outlet />
+    ) : (
+      <PageLayout title={project_attrs.name || "Untitled Project"}>
         <div className="flex flex-col items-center w-full gap-2 mb-4">
           <div className="w-full max-w-3xl">
             <ProjectDescription
               description={project_attrs.description || "No description available"}
               projectManager={project_attrs.project_manager || "Unknown"}
               dueDate={project_attrs.due_date || new Date().toISOString()}
-              isEditable={true}
+              isEditable={true} // Change to false to disable editing
               onSubmit={handleDescriptionSubmit}
             />
           </div>
 
           <div className="w-full max-w-3xl">
             <ProjectFields
+              title="Project Fields"
               fieldDefinitions={field_defs}
               fields={fields}
-              canEdit={true}
+              canEdit={true} // Change to false to disable editing
               onSubmit={handleFieldsSubmit}
             />
           </div>
 
           <div className="w-full max-w-3xl">
             <TaskGrid
-              projectId={projectid}
+              taskableId={projectid}
               tasks={tasks}
               canEdit={true}
               onSubmit={handleTaskSubmit}
             />
           </div>
         </div>
-      )}
-    </PageLayout>
+      </PageLayout>
+    )
   );
 };
 

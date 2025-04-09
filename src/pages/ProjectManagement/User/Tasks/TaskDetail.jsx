@@ -1,15 +1,19 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useTask } from "../../../../services/Task";
 import PageLayout from "../../../../Layouts/ProjectPageLayout";
 import LoadingIndicator from "../../../../components/Shared/LoadingIndicator";
 import ProjectFields from "../../../../components/ProjectManagement/ProjectFields";
+import TaskGrid from "../../../../components/TaskManagement/TaskGrid";
+
 
 const TaskDetail = () => {
-  const { projectId, taskId } = useParams();
-  const { task, error, loading } = useTask({ projectId, taskId });
+  const { projectid, workflowid, taskId } = useParams();
+  const taskableId = projectid || workflowid;
+  const taskableType = projectid ? "projects" : "workflows";
+  const { task, error, loading } = useTask({ taskableId, taskId, taskableType });
 
   if (loading) return <LoadingIndicator />;
-  if (error) return <p>Error: {error}</p>;
+  if (error) return <p>Error: {error.message || "An unexpected error occurred."}</p>;
 
   if (!task || !task.data) {
     return <p>Error: Task data is unavailable.</p>;
@@ -31,10 +35,10 @@ const TaskDetail = () => {
         <div className="w-full max-w-3xl">
           <div className="p-6 bg-base-100 shadow-md rounded-lg">
             <h2 className="text-xl font-bold text-primary mb-4">Task Details</h2>
-            <p className="text-sm text-gray-600 mb-2">
+            <p className="text-sm text-secondary mb-2">
               <strong>Description:</strong> {taskAttrs.description || "No description available"}
             </p>
-            <p className="text-sm text-gray-600 mb-2">
+            <p className="text-sm text-secondary mb-2">
               <strong>Due Date:</strong> {new Date(taskAttrs.due_date).toLocaleDateString()}
             </p>
           </div>
@@ -42,12 +46,14 @@ const TaskDetail = () => {
 
         <div className="w-full max-w-3xl">
           <ProjectFields
+            title="Task Fields"
             fieldDefinitions={fieldDefs}
             fields={fields}
             canEdit={true} // Change to false to disable editing
             onSubmit={handleFieldsSubmit}
           />
         </div>
+
       </div>
     </PageLayout>
   );

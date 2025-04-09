@@ -3,8 +3,8 @@ import { useTask } from "../../services/Task";
 import LoadingIndicator from "../../components/Shared/LoadingIndicator";
 import { Link } from "react-router-dom";
 
-const TaskModal = ({ projectId, taskId, onClose }) => {
-  const { task, error, loading } = useTask({ projectId, taskId });
+const TaskModal = ({ taskableId, taskId, taskableType, onClose }) => {
+  const { task, error, loading } = useTask({ taskableId, taskId, taskableType });
 
   if (loading) return <LoadingIndicator />;
   if (error) return <p>Error: {error}</p>;
@@ -20,21 +20,23 @@ const TaskModal = ({ projectId, taskId, onClose }) => {
       <div className="modal-box">
         <button
           onClick={onClose}
-          className="btn btn-sm btn-circle absolute right-2 top-2"
+          className="btn btn-sm btn-circle btn-error absolute right-2 top-2"
         >
           ✕
         </button>
         <div>
-          <h3 className="font-bold text-lg">{taskData.name}</h3>
-          <p className="py-4">{taskData.description}</p>
-          <p className="text-sm text-gray-500">
+          <h3 className="font-bold text-lg text-primary">{taskData.name}</h3>
+          <p className="py-4 text-secondary">{taskData.description}</p>
+          <p className="text-sm text-accent">
             Due Date: {new Date(taskData.due_date).toLocaleDateString()}
           </p>
           <div className="mt-4">
             <Link
-              to={`/projects/${projectId}/tasks/${taskId}`} // Link to TaskDetail
+              to={{
+                pathname: `/${taskableType}/${taskableId}/tasks/${taskId}`,
+              }}
               className="btn btn-primary"
-            > 
+            >
               Open Full Task
             </Link>
           </div>
@@ -45,7 +47,7 @@ const TaskModal = ({ projectId, taskId, onClose }) => {
 };
 
 TaskModal.propTypes = {
-  projectId: PropTypes.string.isRequired,
+  taskableId: PropTypes.string.isRequired,
   taskId: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
 };
