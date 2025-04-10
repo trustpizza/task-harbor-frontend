@@ -1,21 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Banner = ({ onOpenModal }) => {
+const Banner = ({ buttons }) => {
   return (
     <div className="flex justify-end mb-4 p-4 rounded shadow">
-      <button
-        className="btn btn-primary"
-        onClick={onOpenModal}
-      >
-        Add Column
-      </button>
+      {buttons.map((button, index) => (
+        <button
+          key={index}
+          className={`btn ${button.className || 'btn-primary'} mr-2`}
+          onClick={button.onClick}
+        >
+          {button.label}
+        </button>
+      ))}
     </div>
   );
 };
 
 Banner.propTypes = {
-  onOpenModal: PropTypes.func.isRequired,
+  buttons: PropTypes.arrayOf(
+    PropTypes.shape({
+      label: PropTypes.string.isRequired,
+      onClick: PropTypes.func.isRequired,
+      className: PropTypes.string,
+    })
+  ).isRequired,
 };
 
 export default Banner;

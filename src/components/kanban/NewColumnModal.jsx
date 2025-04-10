@@ -17,7 +17,7 @@ const NewColumnModal = ({ isOpen, onClose, onSubmit, fields, projectAttributes }
     onClose();
   };
 
-  const optionsForFilterKey = (filterType === 'Field' ? fields : projectAttributes).map((item) => ({
+  const optionsForFilterKey = (filterType === 'Field' ? fields : projectAttributes || []).map((item) => ({
     value: item.name,
     label: item.name,
   }));

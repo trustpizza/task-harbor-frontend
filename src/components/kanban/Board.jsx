@@ -4,13 +4,15 @@ import Banner from "./Banner";
 import NewColumnModal from "./NewColumnModal";
 import PropTypes from 'prop-types';
 
-const Board = ({ columns, values, fields, projectAttributes, onAddColumn, onDeleteColumn }) => {
+const Board = ({ columns, values, fields, projectAttributes, onAddColumn, onDeleteColumn, bannerButtons }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <main className="w-full flex-1 sm:pb-4 overflow-hidden">
       {/* Banner Element */}
-      <Banner onOpenModal={() => setIsModalOpen(true)} />
+      <Banner
+        buttons={bannerButtons}
+      />
 
       <div className="w-full h-full py-6 sm:py-12 px-6 md:px-0 mx-auto overflow-x-auto">
         <div className="grid grid-flow-col auto-cols-[minmax(300px,_1fr)] gap-4">
